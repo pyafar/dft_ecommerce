@@ -4,7 +4,7 @@ const path = require("path");
 const port = 4000;
 
 app.listen(process.env.PORT || port, () => {
-    console.log("Sv iniciado correctamente")
+    console.log("Servidor iniciado en puerto 4000")
 });
 
 app.use(express.static(path.join(__dirname, "/public")));
