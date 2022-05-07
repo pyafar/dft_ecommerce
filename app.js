@@ -1,46 +1,17 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const port = 4000;
+const port = 3030;
+const rutasMain = require("./routes/mainRoutes")
 
 app.listen(process.env.PORT || port, () => {
-    console.log("Servidor iniciado en puerto 4000")
+    console.log("Sv iniciado correctamente")
 });
 
 app.use(express.static(path.join(__dirname, "/public")));
 
-app.get('/', (req, res)=> {
-    res.sendFile(path.join(__dirname, '/views/index.html'))
-});
+app.use("/", rutasMain);
 
-app.get('/carrito', (req, res)=> {
-    res.sendFile(path.join(__dirname, '/views/productCart.html'))
-});
+app.set('view engine', 'ejs');
 
-app.post('/carrito', (req, res)=> {
-    res.sendFile(path.join(__dirname, '/views/productCart.html'))
-});
-
-app.get('/login', (req, res)=> {
-    res.sendFile(path.join(__dirname, '/views/login.html'))
-});
-
-app.get('/registro', (req, res)=> {
-    res.sendFile(path.join(__dirname, '/views/register.html'))
-});
-app.post('/login', (req, res)=> {
-    res.sendFile(path.join(__dirname, '/views/login.html'))
-});
-
-app.post('/registro', (req, res)=> {
-    res.sendFile(path.join(__dirname, '/views/register.html'))
-});
-
-app.get('/producto', (req, res)=> {
-    res.sendFile(path.join(__dirname, '/views/productDetail.html'))
-});
-
-app.post('/producto', (req, res)=> {
-    res.sendFile(path.join(__dirname, '/views/productDetail.html'))
-});
 

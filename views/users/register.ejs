@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head') %> 
+<body>
+
+    <%- include('../partials/header') %> 
+        
+
+    <main class="main-general">
+
+        <section class="cont-form-rg">
+
+            <form class="form-registro" action="/registro" method="post">
+            
+                <h2 class="titulo-login">Registro de usuarios</h2>
+
+                <article class="cont-rg">
+
+                    
+                    <div class="registro__cont">
+
+                        <label for="name">
+                            <p class="lg__descrip">Nombre*</p>                        
+                            <input class="rg__campos" type="text" id="name" name="name" placeholder="Juan" required>
+                            <span class="feedback"></span>
+                        </label>
+                    
+                        <label for="surname">
+                            <p class="lg__descrip">Apellido*</p>
+                            <input class="rg__campos" type="text" id="surname" name="surname" placeholder="Perez" required>
+                            <span class="feedback"></span>
+                        </label>
+
+                        <label for="date">
+                            <p class="lg__descrip">Fecha de nacimiento*</p>
+                            <input class="rg__nac" type="date" id="date" name="date" required>
+                            <span class="feedback"></span>
+                        </label>
+                        
+                        <label for="avatar">
+                            <p class="lg__descrip">Foto de perfil</p>
+                            <input class="rg__avatar" type="file" name="avatar" id="avatar" accept=".jpg, .png">
+                            <span class="feedback"></span>
+                        </label>
+                        
+                        <label for="tel">
+                            <p class="lg__descrip">Teléfono*</p>
+                            <input class="rg__campos" type="tel" name="tel" id="tel" placeholder="(011)11111111" required>
+                            <span class="feedback"></span>
+                        </label>
+
+                    </div>
+                    
+                    <h3 class="rg__subtitulo">Dirección</h3>
+                    <div class="registro__cont">
+                        <label for="calle">
+                            <p class="lg__descrip">Calle y altura*</p>
+                            <input class="rg__campos" type="text" id="calle" name="email" placeholder="Av. Colón 123" required>
+                            <span class="feedback"></span>
+                        </label>
+                    </div>
+                    <div class="registro__cont">
+                        <label for="cp">
+                            <p class="lg__descrip">Codigo postal*</p>
+                            <input class="rg__campos" type="number" id="cp" name="email" placeholder="1234" required>
+                            <span class="feedback"></span>
+                        </label>
+                    </div>
+                    <div class="registro__cont">
+                        <label for="localidad">
+                            <p class="lg__descrip">Localidad*</p>
+                            <input class="rg__campos" type="text" id="localidad" name="email" placeholder="CABA" required>
+                            <span class="feedback"></span>
+                        </label>
+                    </div>
+                    
+
+
+                    <h3 class="rg__subtitulo">Datos de la cuenta</h3>
+                    <div class="registro__cont">
+                        <label for="email">
+                            <p class="lg__descrip">E-mail*</p>
+                            <input class="rg__campos" type="email" id="email" name="email" placeholder="juan.perez@email.com" required>
+                            <span class="feedback"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="registro__cont">
+                        <label for="password">
+                            <p class="lg__descrip">Contraseña*</p>
+                            <input class="rg__campos" type="password" id="password" name="password" placeholder="******" required>
+                            <span class="feedback"></span>
+                        </label>
+
+                    <div class="registro__cont">
+                        <label for="password">
+                            <p class="lg__descrip">Confirmar contraseña*</p>
+                            <input class="rg__campos" type="password" id="password" name="password" placeholder="******" required>
+                            <span class="feedback"></span>
+                        </label>
+                    </div>
+                    
+                </article>
+
+                <button class="form-lg__btn" type="submit">Registrate</button>
+                <p class="lg-msg">¿Ya tenés una cuenta?  <a href="/login">Iniciá Sesión</a></p>
+                
+            </form>
+
+        </section>
+
+    </main>
+    
+    
+    <%- include('../partials/footer') %> 
+    
+</body>
+</html>
