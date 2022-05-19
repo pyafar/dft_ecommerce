@@ -29,7 +29,6 @@
 
 
 body{
-    font-display: swap;
     font-family: 'Roboto', 'sans-serif';
     margin: 0px;
     padding: 0px;
@@ -407,6 +406,7 @@ div.guarda{
     height: 388px;
     margin: 15px;
     position: relative;
+    scroll-snap-type: x mandatory;
     width: 260px;
 }
 
@@ -1266,15 +1266,17 @@ div.guarda{
     align-content: center;
     align-items: center;
     background-color: transparent;
+    border: 1px solid var(--gris);
+    border-radius: 16px;
     flex-direction: column;
     flex-wrap: wrap;
     display: flex;
     height: auto;
     justify-content: center;
-    margin: 0 auto 0 auto;
+    margin: 40px auto 0 auto;
     min-width: 300px;
     padding: 24px 0 24px 0;
-    width: 50%;
+    width: 30%;
 
 }
 
@@ -1286,7 +1288,7 @@ div.guarda{
     margin-bottom: 24px;
     min-width: 215px;
     padding: 28px 0 7px 0;
-    width: 50%;
+    width: 70%;
 }
 
 .rg__campos, .rg__avatar, .rg__nac, .campos__textarea{
@@ -1340,14 +1342,16 @@ div.guarda{
     align-content: center;
     align-items: center;
     background-color: transparent;
+    border: 1px solid var(--gris);
+    border-radius: 16px;
     flex-direction: column;
     flex-wrap: wrap;
     display: flex;
-    height: 496px;
     justify-content: center;
-    margin: 0 auto 0 auto;
+    margin: 40px auto 0 auto;
+    padding: 15px 0;
     min-width: 300px;
-    width: 50%;
+    width: 25%;
 }
 
 .titulo-login{
@@ -1361,9 +1365,9 @@ div.guarda{
     display: flex;
     flex-direction: column;
     margin-bottom: 24px;
-    min-width: 215px;
     padding: 28px 0 28px 0;
-    width: 40%;
+    min-width: 250px;
+    width: 60%;
 }
 
 .form-lg__campos{
@@ -1399,7 +1403,7 @@ div.guarda{
     height: 50px;
 }
 
-.form-lg__btn:hover{
+.form-lg__btn:hover, .add__btn:hover{
     animation: box-highlight 2s linear infinite;
     transition: all 400ms linear;
 
@@ -1468,7 +1472,11 @@ div.guarda{
 }
 
 
+
 .admin-forms{
+    border: solid 1px var(--gris);
+    border-radius: 16px;
+    padding: 0 16px;
     margin: 40px auto 0 auto;
     width: 100%;
 }
@@ -1563,6 +1571,7 @@ div.guarda{
 }
 
 .cont-dest__link{
+    scroll-snap-type: start;
     text-decoration: none;
 }
 
@@ -2448,6 +2457,7 @@ footer{
     }
 
     .admin-forms {
+        padding: 0 32px;
         width: 72%;
     }
 

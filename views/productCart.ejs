@@ -19,7 +19,7 @@
             <!-- Contenedor de productos para la compra -->
             <article class="leftArticle">           
                 
-                <h2 class="carrito-title"><i class="fa-solid fa-cart-shopping"></i>  Mi Carrito</h2>
+                <h2 class="carrito-title"><i class="fa-solid fa-cart-shopping"></i>  Mi carrito</h2>
 
                 <div class="caja">
                     <div class="caja-producto">
@@ -142,7 +142,15 @@
         <section class="main-home__cont-prod">
             <h2 class="cont-prod__categorias">Otros usuarios también compraron</h2>
             <div class="cont-prod__articulos"> 
-                <%- include('./partials/carrusel') %> 
+                <% productsDB.forEach((product, index) => { %>
+
+                    <% if (index < 4) { %>
+
+                        <%- include('./components/carruselProduct', {product : product}) %>
+
+                    <% } %>
+
+                <% }) %> 
             </div>
         </section>
 

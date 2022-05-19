@@ -1,17 +1,40 @@
+// ************ Require's ************
 const express = require("express");
-const app = express();
 const path = require("path");
-const port = 3030;
-const rutasMain = require("./routes/mainRoutes")
+const methodOverride = require('method-override');
 
+/*** Rutas (require) */
+const mainRoutes = require("./routes/mainRoutes")
+const productsRoutes = require("./routes/products")
+// const usersRoutes = require("./routes/users")
+
+// ************ Express() ************
+const app = express();
+
+// ************  Middlewares ************
+app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.urlencoded({ extended: false }));
+app.use(methodOverride('_method')); 
+
+
+// ************ EJS ************
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
+
+
+/*** Rutas (use) */
+app.use("/", mainRoutes);
+app.use("/products", productsRoutes);
+//app.use("/profile", usersRoutes);
+
+
+// ************ Servidor ************
+const port = 3030;
 app.listen(process.env.PORT || port, () => {
-    console.log("Sv iniciado correctamente")
+    console.log(`Servidor corriendo en puerto ${port}`)
 });
 
-app.use(express.static(path.join(__dirname, "/public")));
 
-app.use("/", rutasMain);
 
-app.set('view engine', 'ejs');
 
 

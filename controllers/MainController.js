@@ -1,80 +1,29 @@
-const productos = [
-    { 'id' : '1',
-    'nombre' : 'Asus Rog Zephyrus Duo Ryzen 9 16Gb 1Tb Rtx 3060',
-    'imagen' : 'asus-zephyrus-duo_15-GX550LXS-001',
-    'precio' : '$580.000',
-    'categoria' : 'Notebook',
-    'descripcion' : '',
-    'caracteristicas' : {
-        'anio' : '',
-        'memoria' : '16gb',
-        'memoria' : '16gb',
-        'memoria' : '16gb'
-    },
-},
-    { 'id' : '2',
-    'nombre' : 'Notebook Gamer HP OMEN 15-DC1020NR',
-    'imagen' : 'hp-omen-1020-001',
-    'precio' : '$335.000',
-    'categoria' : 'Notebook',
-    'descripcion' : '',
-    'caracteristicas' : {
-        'anio' : '',
-        'memoria' : '16gb',
-        'memoria' : '16gb',
-        'memoria' : '16gb'
-    },
-},
-    { 'id' : '3',
-    'nombre' : 'Notebook Gamer Acer Nitro I5 10Ma 8Gb Ssd256 Gtx1650',
-    'imagen' : 'acer-nitro-i5-001',
-    'precio' : '$144.000',
-    'categoria' : 'Notebook',
-    'descripcion' : '',
-    'caracteristicas' : {
-        'anio' : '',
-        'memoria' : '16gb',
-        'memoria' : '16gb',
-        'memoria' : '16gb'
-    },
-},
-    { 'id' : '4',
-    'nombre' : 'Notebook Gamer Dell Alienware 17 R5 17.3',
-    'imagen' : 'alienware-17-r5-001',
-    'precio' : '$508.890',
-    'categoria' : 'Notebook',
-    'descripcion' : '',
-    'caracteristicas' : {
-        'anio' : '',
-        'memoria' : '16gb',
-        'memoria' : '16gb',
-        'memoria' : '16gb'
-    },
-},
+// ************ Require's ************
+const fs = require('fs');
+const path = require('path');
 
-]
+// ************ Path's ************
+const productsFilePath = path.join(__dirname, '../data/products.json');
+const usersFilePath = path.join(__dirname, '../data/users.json');
+
+let users = JSON.parse(fs.readFileSync(usersFilePath, 'utf-8'));
+
+
 
 const mainController = {
     
     index:function(req,res){
-        res.locals.title = "DelFuegoTechno"
-        res.render('index', {productos : productos});
+      let productsDB = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+      res.locals.title = "DelFuegoTechno"
+      res.render('index', {productsDB : productsDB});
     },
   
     productCart:function(req,res){
+        let productsDB = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
         res.locals.title = "DFT - Carrito"
-        res.render('productCart', {productos : productos});
+        res.render('productCart', {productsDB : productsDB});
     },
 
-    productDetail:function(req,res){
-        res.locals.title = "DFT - Detalle"
-        res.render('products/productDetail', {productos : productos});
-    },
-
-    productList:function(req,res){
-        res.locals.title = "DFT - Categorías"
-        res.render('products/productList', {productos : productos});
-    },
  
     register:function(req,res){
         res.locals.title = "DFT - Registro Usuarios"
@@ -84,11 +33,6 @@ const mainController = {
     login:function(req,res){
         res.locals.title = "DFT - Login Usuarios"
         res.render('users/login');
-    },
-    
-    admin:function(req,res){
-        res.locals.title = "DFT - Admin Panel"
-        res.render('users/admin-edit');
     },
     
 };
