@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+    <%- include('../partials/head', {title : 'DFT - Registrate'}) %> 
+<body>
+
+    <%- include('../partials/header') %> 
+        
+
+    <main class="main-general">
+
+        <section class="cont-form-rg">
+
+            <form class="form-registro" action="/users/edit/<%= userProfile.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+            
+                <h2 class="titulo-login">Editando usuario <%= userProfile.firstName %></h2>
+
+                <article class="cont-rg">
+
+                    
+                    <div class="registro__cont">
+
+                        <label for="firstName">
+                            <p class="lg__descrip">Nombre*</p>                        
+                            <input class="rg__campos" type="text" id="firstName" name="firstName" value="<%= userProfile.firstName %>" required>
+                            <span class="feedback"></span>
+                        </label>
+                    
+                        <label for="lastName">
+                            <p class="lg__descrip">Apellido*</p>
+                            <input class="rg__campos" type="text" id="lastName" name="lastName" value="<%= userProfile.lastName %>" required>
+                            <span class="feedback"></span>
+                        </label>
+
+                        <label for="birth">
+                            <p class="lg__descrip">Fecha de nacimiento*</p>
+                            <input class="rg__nac" type="date" id="birth" name="birth" required>
+                            <span class="feedback"></span>
+                        </label>
+                        
+                        <label for="image">
+                            <p class="lg__descrip">Foto de perfil</p>
+                            <input class="rg__avatar" type="file" name="image" id="image" accept=".jpg, .png">
+                            <span class="feedback"></span>
+                        </label>
+                        
+                        <label for="phone">
+                            <p class="lg__descrip">Teléfono*</p>
+                            <input class="rg__campos" type="phone" name="phone" id="phone" value="<%= userProfile.phone %>" required>
+                            <span class="feedback"></span>
+                        </label>
+
+                    </div>
+                    
+                    <h3 class="rg__subtitulo">Dirección</h3>
+                    <div class="registro__cont">
+                        <label for="address">
+                            <p class="lg__descrip">Calle y altura*</p>
+                            <input class="rg__campos" type="text" id="address" name="address" value="<%= userProfile.address %>" required>
+                            <span class="feedback"></span>
+                        </label>
+                    </div>
+                    <div class="registro__cont">
+                        <label for="cp">
+                            <p class="lg__descrip">Codigo postal*</p>
+                            <input class="rg__campos" type="number" id="cp" name="cp" value="<%= userProfile.cp %>" required>
+                            <span class="feedback"></span>
+                        </label>
+                    </div>
+                    <div class="registro__cont">
+                        <label for="city">
+                            <p class="lg__descrip">Localidad*</p>
+                            <input class="rg__campos" type="text" id="city" name="city" value="<%= userProfile.city %>" required>
+                            <span class="feedback"></span>
+                        </label>
+                    </div>
+                    
+
+
+                    <h3 class="rg__subtitulo">Datos de la cuenta</h3>
+                    <div class="registro__cont">
+                        <label for="email">
+                            <p class="lg__descrip">E-mail*</p>
+                            <input class="rg__campos" type="email" id="email" name="email" value="<%= userProfile.email %>" required>
+                            <span class="feedback"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="registro__cont">
+                        <label for="password">
+                            <p class="lg__descrip">Contraseña*</p>
+                            <input class="rg__campos" type="password" id="password" name="password" placeholder="Nueva Contraseña" required>
+                            <span class="feedback"></span>
+                        </label>
+
+                    <div class="registro__cont">
+                        <label for="passwordRepeat">
+                            <p class="lg__descrip">Confirmar contraseña*</p>
+                            <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="Nueva Contraseña"  class="rg__campos" required>
+                            <span class="feedback"></span>
+                        </label>
+                    </div>
+                    
+                </article>
+
+                <button class="form-lg__btn" type="submit">Editar</button>
+                
+            </form>
+
+        </section>
+
+    </main>
+    
+    
+    <%- include('../partials/footer') %> 
+    
+</body>
+</html>

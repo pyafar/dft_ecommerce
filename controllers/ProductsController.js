@@ -1,18 +1,46 @@
-// ************ Require's ************
+// ************ Require's ************/
 const fs = require('fs');
 const path = require('path');
+const { validationResult } = require('express-validator');
 
-// ************ Path's ************
+// *** Path's */
 const productsFilePath = path.join(__dirname, '../data/products.json');
-const usersFilePath = path.join(__dirname, '../data/users.json');
 
-let users = JSON.parse(fs.readFileSync(usersFilePath, 'utf-8'));
+
+//*** Products Controller */
 
 const ProductsController = {
     index : (req,res)=>{
         let productsDB = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
 
         res.render('products/productList', {productsDB : productsDB});
+    },
+    
+    search : (req,res)=>{
+        let productsDB = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+
+        let userSearch = req.query.search.toLowerCase();
+
+        let searchResults = [];
+
+        productsDB.forEach(foundProduct => {
+            if (foundProduct.name.toLowerCase().includes(userSearch)){
+            searchResults.push(foundProduct);
+            }
+        });
+
+        res.render('products/productList', {productsDB : searchResults});
+
+    },
+
+
+    category : (req,res)=>{
+        let productsDB = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+
+        let selectedCategory = productsDB.filter(producto => producto.category == req.params.category);
+
+
+        res.render('products/productCategory', {selectedCategory : selectedCategory});
     },
 
     detail : (req, res)=>{
@@ -22,60 +50,120 @@ const ProductsController = {
         res.render('products/productDetail', {productRequested : productRequested, productsDB : productsDB});
     },
 
+    admin : (req, res)=>{
+        let productsDB = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+
+        res.render('products/admin-product-list', {productsDB : productsDB});
+    },
+
     create : (req, res)=>{
-        res.render('users/admin-create');
+        res.render('products/admin-create');
         
 
     },
     
     store : (req, res)=>{
         let productsDB = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+        
+        let validationResults = validationResult(req);
+        let errors = validationResults.mapped();
+        
+        if(validationResults.errors.length === 0){
+            
+            let lastItem = productsDB.length -1;
+            let NewItemId = productsDB[lastItem].id +1;
+            
+            let image;
+            (req.files.image) ? image = (req.files.image.map(item => item.originalname)) : image = [];
+            
+            let thumb;
+            (req.files.thumb)? thumb = (req.files.thumb[0].originalname) : thumb = '';
+            
+            let newProduct = {
+                id : NewItemId,
+                name:  req.body.name,
+                category : req.body.category,
+                price : parseInt(req.body.price),
+                stock : parseInt(req.body.stock),
+                image: image,
+                thumb : thumb,
+                description : req.body.description,
+                specs :  req.body.specs
+                     
+                }
+            
+            let newProductList;
+            
+            productsDB == '' ? newProductList = [] : newProductList = productsDB;
+            
+            newProductList.push(newProduct);
+            
+            fs.writeFileSync(productsFilePath, JSON.stringify(newProductList, null, "\t"));
+            
+            res.redirect('/products');
 
-        let lastItem = productsDB.length -1;
-        let NewItemId = productsDB[lastItem].id +1;
+        }else{
 
-        let newProduct = {
-            id : NewItemId,
-            name: req.body.name,
-            category : req.body.category,
-            price : req.body.price,
-        //    image: req.file.image,
-            description : req.body.description,
-            specs : req.body.specs,
-            sock : req.body.stock
-         
+            res.render('products/admin-create', {errors : errors, oldData : req.body});
         }
-
-        let newProductList;
-
-        productsDB == '' ? newProductList = [] : newProductList = productsDB;
-
-        newProductList.push(newProduct);
-
-        fs.writeFileSync(productsFilePath, JSON.stringify(newProductList, null, "\t"));
-
-        res.redirect('admin/create/');
 
 
     },
     
     edit : (req, res)=>{
+        let productsDB = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+        let productRequested = productsDB.find(producto => producto.id === parseInt(req.params.id));
 
+        res.render('products/admin-edit', {productRequested : productRequested, productsDB : productsDB});
 
     },
     
     update : (req, res)=>{
+        let productsDB = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+
+        let productToEdit = productsDB.find(item => item.id === parseInt(req.params.id));
+
+        let image;
+        (req.files.image) ? image = (req.files.image.map(item => item.originalname)) : image = productToEdit.image;
+
+        let thumb;
+        (req.files.thumb)? thumb = (req.files.thumb[0].originalname) : thumb = productToEdit.thumb;
+ 
+        let newEdition = {
+            id : parseInt(req.params.id),
+            name : req.body.name,
+            category : req.body.category,
+            price : parseInt(req.body.price),
+            stock : parseInt(req.body.stock),
+            image : image,
+            thumb : thumb,
+            description : req.body.description,
+            specs : req.body.specs
+
+        };
+
+        let productIndex = productsDB.indexOf(productToEdit);
+
+        productsDB[productIndex] = newEdition;
+
+        fs.writeFileSync(productsFilePath, JSON.stringify(productsDB,null,"\t"));
+
+        res.redirect('/products/admin')
 
 
     },
     
     destroy : (req, res)=>{
+		let productsDB = JSON.parse(fs.readFileSync(productsFilePath, 'utf-8'));
+
+        const newProductsDatabase = productsDB.filter(item => item.id !== parseInt(req.params.id));
+
+        fs.writeFileSync(productsFilePath, JSON.stringify(newProductsDatabase,null,"\t"));
+
+        res.redirect('/products')
 
 
     },
-
-
-
 
 }
 

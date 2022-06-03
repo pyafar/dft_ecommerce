@@ -1,34 +1,37 @@
+// ************ Require's ************/
 const express = require("express");
+const path = require('path');
 const router = express.Router();
 const ProductsController = require("../controllers/ProductsController");
-const multer = require('multer');
+const productValidator = require('../middlewares/productValidator');
+const multipleUpload = require('../middlewares/multerProducts');
 
-/*** GET ALL PRODUCTS ***/ 
+
+/*** GET ALL PRODUCTS */ 
 router.get('/', ProductsController.index); 
 
-/*** GET ONE PRODUCT ***/ 
+/*** SEARCH PRODUCT */ 
+router.get('/search', ProductsController.search);
+
+/*** GET ONE CATEGORY */ 
+router.get('/category/:category', ProductsController.category); 
+
+/*** GET ONE PRODUCT */ 
 router.get('/detail/:id', ProductsController.detail); 
 
+/*** ADMIN PANNEL */ 
+router.get('/admin', ProductsController.admin); 
 
-//***** esto sería desde el ADMIN PANEL *****//
-
-/*** CREATE ONE PRODUCT ***/ 
-/**** ruta POST para CREAR nuevo producto y que redirija a productList */
-
-//acá nos lleva al formulario de carga de producto (vista: admin-create)
+/*** CREATE ONE PRODUCT */ 
 router.get('/admin/create', ProductsController.create); 
+router.post('/admin', multipleUpload, productValidator, ProductsController.store); 
 
-/**** acá redirige a la lista de todos los productos (/productList) */
-router.post('/admin', /*upload.array('prod-img'),*/ ProductsController.store); 
+/*** EDIT ONE PRODUCT */ 
+router.get('/admin/edit/:id', ProductsController.edit); 
+router.put('/admin/edit/:id', multipleUpload, ProductsController.update); 
 
-/*** EDIT ONE PRODUCT ***/ 
-/**** ruta PUT para modificar un producto (vista: admin-edit) */
-router.get('/edit/:id', ProductsController.edit); 
-router.put('/edit/:id', /*upload.array('prod-img'),*/ ProductsController.update); 
+/*** DELETE ONE PRODUCT */ 
+router.delete('/admin/edit/:id', ProductsController.destroy); 
 
-
-/*** DELETE ONE PRODUCT***/ 
-/****  ruta DELETE para borrar un producto */
-router.delete('/:id', ProductsController.destroy); 
 
 module.exports = router;
