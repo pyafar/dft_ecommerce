@@ -5,10 +5,9 @@
  const path = require('path');
  const userValidator = require('../middlewares/userValidator');
  const upload = require('../middlewares/multerUsers');
- const recordameMiddleware = require('../middlewares/recordameMiddleware');
- // Con este middleware podemos verificar si el usuario está logueado o no
  const guestMiddleware = require('../middlewares/guestMiddleware');
- const authMiddleware = require('../middlewares/authMiddleware');
+ const authMiddleware = require('../middlewares/authMiddleware'); 
+ const adminMiddleware = require('../middlewares/adminMiddleware')
  
  /**** GET LOGIN */
  router.get('/login', guestMiddleware, UsersController.login); 
@@ -29,13 +28,13 @@
  router.get('/logout', UsersController.logout); 
  
 /**** GET USER EDIT FORM */
-//router.get('/edit/:id', UsersController.view); 
+router.get('/edit/:id', UsersController.edit); 
 
 /**** EDIT USER */
-router.put('/edit/:id', upload.single('image'), UsersController.update);
+router.put('/edit/:id', upload.single('image'), userValidator, UsersController.update);
 
 /**** GET ALL USERS */
-router.get('/list', UsersController.list); 
+router.get('/list', adminMiddleware, UsersController.list); 
 
 /**** DELETE ONE USER*/
 router.delete('/edit/:id', UsersController.delete); 

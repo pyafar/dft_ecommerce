@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <%- include('../partials/head', {title : 'Mi perfil: ' + userProfile.firstName}) %>
+    <%- include('../partials/head', {title : 'Mi perfil: ' + userProfile.first_name}) %>
 <body>
     <%- include('../partials/header') %> 
     <main class="main-general">
@@ -9,13 +9,16 @@
         <div class="userProfileCont">
             <div class="profileWelcome">
                 <div class="profileImg">
-                    <img src="/img/users/<%= userProfile.image != "" ? userProfile.image : "user-default.png" %>" alt="Imagen de perfil de <%= userProfile.firstName %>">
+                    <% if (userProfile) { %>
+                     
+                    
+                    <img src="/img/users/<%= userProfile.image != null ? userProfile.image : "user-default.png" %>" alt="Imagen de perfil de <%= userProfile.firstName %>">
                 </div>
-                <h2 class="profileGreeting">Hola <%= userProfile.firstName %>!</h2>
+                <h2 class="profileGreeting">Hola <%= userProfile.first_name %>!</h2>
             </div>
             <div class="profileInfo">
                 <p class="infoTitles">Nombre Completo</p>
-                <p class="infoData"><%= userProfile.firstName + ' ' + userProfile.lastName  %></p>
+                <p class="infoData"><%= userProfile.first_name + ' ' + userProfile.last_name  %></p>
                 <br>
                 <p class="infoTitles">Dirección</p>
                 <p class="infoData"><%= userProfile.address %></p>
@@ -29,7 +32,7 @@
            <a href="/users/edit/<%= userProfile.id %>" class="profileEdit">EDITAR</a>
            <a href="/users/logout" class="profileEdit">CERRAR SESIÓN</a>
        </div>
-
+       <% } %>
 
     </main>
     <%- include('../partials/footer') %> 

@@ -19,34 +19,41 @@
                     
                     <div class="registro__cont">
 
-                        <label for="firstName">
-                            <p class="lg__descrip">Nombre*</p>                        
-                            <input class="rg__campos" type="text" id="firstName" name="firstName" value="<%= userProfile.firstName %>" required>
-                            <span class="feedback"></span>
+                        <label for="first_name">
+                            <p class="lg__descrip">Nombre*</p>  
+                            <% if (locals.errors && errors.first_name) {%> 
+                                <p class="errorMsg"><%= errors.first_name.msg %></p>
+                            <%}  %>                       
+                            <input class="form__fields" type="text" id="first_name" name="first_name" value="<%= userProfile.first_name %>" >
                         </label>
                     
-                        <label for="lastName">
+                        <label for="last_name">
                             <p class="lg__descrip">Apellido*</p>
-                            <input class="rg__campos" type="text" id="lastName" name="lastName" value="<%= userProfile.lastName %>" required>
-                            <span class="feedback"></span>
+                            <% if (locals.errors && errors.last_name) {%> 
+                                <p class="errorMsg"><%= errors.last_name.msg %></p>
+                            <%}  %> 
+                            <input class="form__fields" type="text" id="last_name" name="last_name" value="<%= userProfile.last_name %>" >
                         </label>
 
                         <label for="birth">
                             <p class="lg__descrip">Fecha de nacimiento*</p>
-                            <input class="rg__nac" type="date" id="birth" name="birth" required>
-                            <span class="feedback"></span>
+                            <% if (locals.errors && errors.birth) {%> 
+                                <p class="errorMsg"><%= errors.birth.msg %></p>
+                            <%}  %> 
+                            <input class="form__fields" type="date" id="birth" name="birth" value="<%= userProfile.birth %>">
                         </label>
                         
                         <label for="image">
                             <p class="lg__descrip">Foto de perfil</p>
-                            <input class="rg__avatar" type="file" name="image" id="image" accept=".jpg, .png">
-                            <span class="feedback"></span>
+                            <input class="form__fields" type="file" name="image" id="image" accept=".jpg, .png, .webp">
                         </label>
                         
                         <label for="phone">
                             <p class="lg__descrip">Teléfono*</p>
-                            <input class="rg__campos" type="phone" name="phone" id="phone" value="<%= userProfile.phone %>" required>
-                            <span class="feedback"></span>
+                            <% if (locals.errors && errors.phone) {%> 
+                                <p class="errorMsg"><%= errors.phone.msg %></p>
+                            <%}  %> 
+                            <input class="form__fields" type="phone" name="phone" id="phone" value="<%= userProfile.phone %>" >
                         </label>
 
                     </div>
@@ -55,54 +62,80 @@
                     <div class="registro__cont">
                         <label for="address">
                             <p class="lg__descrip">Calle y altura*</p>
-                            <input class="rg__campos" type="text" id="address" name="address" value="<%= userProfile.address %>" required>
-                            <span class="feedback"></span>
+                            <% if (locals.errors && errors.address) {%> 
+                                <p class="errorMsg"><%= errors.address.msg %></p>
+                            <%}  %> 
+                            <input class="form__fields" type="text" id="address" name="address" value="<%= userProfile.address %>" >
                         </label>
                     </div>
                     <div class="registro__cont">
                         <label for="cp">
                             <p class="lg__descrip">Codigo postal*</p>
-                            <input class="rg__campos" type="number" id="cp" name="cp" value="<%= userProfile.cp %>" required>
-                            <span class="feedback"></span>
+                            <% if (locals.errors && errors.cp) {%> 
+                                <p class="errorMsg"><%= errors.cp.msg %></p>
+                            <%}  %> 
+                            <input class="form__fields" type="number" id="cp" name="cp" value="<%= userProfile.cp %>" >
                         </label>
                     </div>
                     <div class="registro__cont">
                         <label for="city">
                             <p class="lg__descrip">Localidad*</p>
-                            <input class="rg__campos" type="text" id="city" name="city" value="<%= userProfile.city %>" required>
-                            <span class="feedback"></span>
+                            <% if (locals.errors && errors.city) {%> 
+                                <p class="errorMsg"><%= errors.city.msg %></p>
+                            <%}  %> 
+                            <input class="form__fields" type="text" id="city" name="city" value="<%= userProfile.city %>" >
                         </label>
                     </div>
                     
-
-
                     <h3 class="rg__subtitulo">Datos de la cuenta</h3>
                     <div class="registro__cont">
                         <label for="email">
                             <p class="lg__descrip">E-mail*</p>
-                            <input class="rg__campos" type="email" id="email" name="email" value="<%= userProfile.email %>" required>
-                            <span class="feedback"></span>
+                            <% if (locals.errors && errors.email) {%> 
+                                <p class="errorMsg"><%= errors.email.msg %></p>
+                            <%}  %> 
+                            <input class="form__fields" type="email" id="email" name="email" value="<%= userProfile.email %>" >
+
                         </label>
                     </div>
                     
                     <div class="registro__cont">
                         <label for="password">
                             <p class="lg__descrip">Contraseña*</p>
-                            <input class="rg__campos" type="password" id="password" name="password" placeholder="Nueva Contraseña" required>
-                            <span class="feedback"></span>
+                            <% if (locals.errors && errors.password) {%> 
+                                <p class="errorMsg"><%= errors.password.msg %></p>
+                            <%}  %> 
+                            <input class="form__fields" type="password" id="password" name="password" placeholder="Nueva Contraseña" >
+
                         </label>
 
                     <div class="registro__cont">
                         <label for="passwordRepeat">
                             <p class="lg__descrip">Confirmar contraseña*</p>
-                            <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="Nueva Contraseña"  class="rg__campos" required>
-                            <span class="feedback"></span>
+                            <% if (locals.errors && errors.passwordRepeat) {%> 
+                                <p class="errorMsg"><%= errors.passwordRepeat.msg %></p>
+                            <%}  %> 
+                            <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="Nueva Contraseña"  class="form__fields" >
+
                         </label>
                     </div>
+
+                    <% if (locals.isAdmin) { %>
+                    <div class="registro__cont">
+                        <label for="role">
+                            <p class="lg__descrip">Rol de usuario</p>
+                            <select name="role" id="role" class="form__fields">
+                                <option value=" " disabled>Elegí un rol</option>
+                                <option value="client" <%= userProfile.role==='client'? 'selected' : ''%>>Client</option>
+                                <option value="admin" <%= userProfile.role==='admin'? 'selected' : ''%>>Admin</option>
+                            </select>
+                        </label>
+                    </div>
+                    <% } %>
                     
                 </article>
 
-                <button class="form-lg__btn" type="submit">Editar</button>
+                <button class="main-btns" type="submit">Editar</button>
                 
             </form>
 

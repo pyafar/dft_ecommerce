@@ -4,13 +4,12 @@
 <body>
 
     <%- include('../partials/header') %> 
-        
 
     <main class="main-general">
 
         <section class="cont-form-rg">
 
-            <form class="form-registro" action="/users/register" method="POST" enctype="multipart/form-data">
+            <form class="form-registro" action="/users/register" method="POST" enctype="multipart/form-data" onsubmit="return confirm('Usuario creado con éxito! Ya podés loguearte!')">
             
                 <h2 class="titulo-login">Registro de usuarios</h2>
 
@@ -19,20 +18,20 @@
                     
                     <div class="registro__cont">
 
-                        <label for="firstName">
+                        <label for="first_name">
                             <p class="lg__descrip ">Nombre*</p>                        
-                            <% if (locals.errors && errors.firstName) {%> 
-                                <p class="errorMsg"><%= errors.firstName.msg %></p>
+                            <% if (locals.errors && errors.first_name) {%> 
+                                <p class="errorMsg"><%= errors.first_name.msg %></p>
                             <%}  %> 
-                            <input type="text" id="firstName" name="firstName" class="rg__campos <%= locals.errors && errors.firstName ? 'invalid' : '' %>" value="<%= locals.oldData ? oldData.firstName : null %>" placeholder="Juan">
+                            <input type="text" id="first_name" name="first_name" class="form__fields <%= locals.errors && errors.first_name ? 'invalid' : '' %>" value="<%= locals.oldData ? oldData.first_name : null %>" placeholder="Juan">
                         </label>
                     
-                        <label for="lastName">
+                        <label for="last_name">
                             <p class="lg__descrip">Apellido*</p>
-                            <% if (locals.errors && errors.lastName) {%> 
-                                <p class="errorMsg"><%= errors.lastName.msg %></p>
+                            <% if (locals.errors && errors.last_name) {%> 
+                                <p class="errorMsg"><%= errors.last_name.msg %></p>
                             <%}  %> 
-                            <input type="text" id="lastName" name="lastName" class="rg__campos <%= locals.errors && errors.lastName? 'invalid' : '' %>" value="<%= locals.oldData ? oldData.lastName : null %>" placeholder="Perez">
+                            <input type="text" id="last_name" name="last_name" class="form__fields <%= locals.errors && errors.last_name? 'invalid' : '' %>" value="<%= locals.oldData ? oldData.last_name : null %>" placeholder="Perez">
                         </label>
 
                         <label for="birth">
@@ -40,12 +39,15 @@
                             <% if (locals.errors && errors.birth) {%> 
                                 <p class="errorMsg"><%= errors.birth.msg %></p>
                             <%}  %> 
-                            <input type="date" id="birth" name="birth" class="rg__nac <%= locals.errors && errors.birth ? 'invalid' : '' %>"value="<%= locals.oldData ? oldData.birth : null %>">
+                            <input type="date" id="birth" name="birth" class="form__fields <%= locals.errors && errors.birth ? 'invalid' : '' %>"value="<%= locals.oldData ? oldData.birth : null %>">
                         </label>
                         
                         <label for="image">
                             <p class="lg__descrip">Foto de perfil</p>
-                            <input  type="file" name="image" id="image" class="rg__avatar" accept=".jpg, .png">
+                            <% if (locals.errors && errors.image) {%> 
+                                <p class="errorMsg"><%= errors.image.msg %></p>
+                            <%}  %> 
+                            <input  type="file" name="image" id="image" class="form__fields" accept=".jpg, .png, .webp">
                             <span class="feedback"></span>
                         </label>
                         
@@ -54,7 +56,7 @@
                             <% if (locals.errors && errors.phone) {%> 
                                 <p class="errorMsg"><%= errors.phone.msg %></p>
                             <%}  %> 
-                            <input type="phone" name="phone" id="phone" class="rg__campos <%= locals.errors && errors.phone ? 'invalid' : '' %>" value="<%= locals.oldData ? oldData.phone : null %>"placeholder="(011)11111111">
+                            <input type="phone" name="phone" id="phone" class="form__fields <%= locals.errors && errors.phone ? 'invalid' : '' %>" value="<%= locals.oldData ? oldData.phone : null %>"placeholder="(011)11111111">
                         </label>
 
                     </div>
@@ -66,7 +68,7 @@
                             <% if (locals.errors && errors.address) {%> 
                                 <p class="errorMsg"><%= errors.address.msg %></p>
                             <%}  %> 
-                            <input  type="text" id="address" name="address" class="rg__campos <%= locals.errors && errors.address ? 'invalid' : '' %>" value="<%= locals.oldData ? oldData.address : null %>"placeholder="Av. Colón 123">
+                            <input  type="text" id="address" name="address" class="form__fields <%= locals.errors && errors.address ? 'invalid' : '' %>" value="<%= locals.oldData ? oldData.address : null %>"placeholder="Av. Colón 123">
                         </label>
                     </div>
                     <div class="registro__cont">
@@ -75,7 +77,7 @@
                             <% if (locals.errors && errors.cp) {%> 
                                 <p class="errorMsg"><%= errors.cp.msg %></p>
                             <%}  %> 
-                            <input type="number" id="cp" name="cp" class="rg__campos <%= locals.errors && errors.cp ? 'invalid' : '' %>"value="<%= locals.oldData ? oldData.cp : null %>"placeholder="1234">
+                            <input type="number" id="cp" name="cp" class="form__fields <%= locals.errors && errors.cp ? 'invalid' : '' %>"value="<%= locals.oldData ? oldData.cp : null %>"placeholder="1234">
                         </label>
                     </div>
                     <div class="registro__cont">
@@ -84,7 +86,7 @@
                             <% if (locals.errors && errors.city) {%> 
                                 <p class="errorMsg"><%= errors.city.msg %></p>
                             <%}  %> 
-                            <input type="text" id="city" name="city" class="rg__campos <%= locals.errors && errors.city ? 'invalid' : '' %>"  value="<%= locals.oldData ? oldData.city : null %>"placeholder="CABA">
+                            <input type="text" id="city" name="city" class="form__fields <%= locals.errors && errors.city ? 'invalid' : '' %>"  value="<%= locals.oldData ? oldData.city : null %>"placeholder="CABA">
                         </label>
                     </div>
                     
@@ -97,7 +99,7 @@
                             <% if (locals.errors && errors.email) {%> 
                                 <p class="errorMsg"><%= errors.email.msg %></p>
                             <%}  %> 
-                            <input  type="email" id="email" name="email" class="rg__campos <%= locals.errors && errors.email ? 'invalid' : '' %>"value="<%= locals.oldData ? oldData.email : null %>"placeholder="juan.perez@email.com">
+                            <input  type="email" id="email" name="email" class="form__fields <%= locals.errors && errors.email ? 'invalid' : '' %>"value="<%= locals.oldData ? oldData.email : null %>"placeholder="juan.perez@email.com">
                         </label>
                     </div>
                     
@@ -107,20 +109,23 @@
                             <% if (locals.errors && errors.password) {%> 
                                 <p class="errorMsg"><%= errors.password.msg %></p>
                             <%}  %> 
-                            <input type="password" id="password" name="password"  class="rg__campos <%= locals.errors && errors.password? 'invalid' : '' %>" placeholder="******">
+                            <input type="password" id="password" name="password"  class="form__fields <%= locals.errors && errors.password? 'invalid' : '' %>" placeholder="******">
                         </label>
 
                     <div class="registro__cont">
                         <label for="passwordRepeat">
                             <p class="lg__descrip">Confirmar contraseña*</p>
-                            <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="******"  class="rg__campos">
+                            <% if (locals.errors && errors.passwordRepeat) {%> 
+                                <p class="errorMsg"><%= errors.passwordRepeat.msg %></p>
+                            <%}  %> 
+                            <input type="password" id="passwordRepeat" name="passwordRepeat" placeholder="******"  class="form__fields">
                             <span class="feedback"></span>
                         </label>
                     </div>
                     
                 </article>
 
-                <button class="form-lg__btn" type="submit">Registrate</button>
+                <button class="main-btns" type="submit">Registrate</button>
                 <p class="lg-msg">¿Ya tenés una cuenta?  <a href="/users/login">Iniciá Sesión</a></p>
                 
             </form>

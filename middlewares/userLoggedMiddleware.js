@@ -1,22 +1,33 @@
-const path = require('path');
-const fs = require('fs');
-const usersFilePath = path.join(__dirname, '../data/users.json');
-const usersDB = JSON.parse(fs.readFileSync(usersFilePath, 'utf-8'));
+const db = require('../database/models/index.js');
 
 const userLoggedMiddleware = (req, res, next) => {
     res.locals.isLogged = false;
 
-    if(req.session.userLogged){
-        res.locals.isLogged = true;
-        res.locals.userLogged = req.session.userLogged
+    let cookieEmail = req.cookies.userEmail;
+
+    let userLogged = req.session.userLogged;
+
+    if(cookieEmail){
+        db.User.findOne({
+            where :{
+                email : cookieEmail
+            }
+        })
+        .then(userProfile=>{
+            return userLogged = userProfile;
+        })
+        .catch(err =>{
+            console.log('OCURRIÓ UN ERROR EN USER LOGGED: '+err )
+        })
     };
 
-    //acá debería leer la cookie pero todo es caos y confusión
-    // let cookieEmail = req.cookies.userEmail;
-    // console.log(cookieEmail)
-
-
+    if(userLogged){
+        res.locals.isLogged = true;
+        res.locals.userLogged = userLogged;
+    };
+    
     next();
+
 };
 
 module.exports = userLoggedMiddleware;
