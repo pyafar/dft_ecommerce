@@ -11,7 +11,6 @@ const db = require('../database/models/index.js');
 const Op = db.Sequelize.Op;
 
 const ProductsController = {
-
     index : (req,res)=>{
         db.Product.findAll()
         .then(productsDB =>{

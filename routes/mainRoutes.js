@@ -6,6 +6,7 @@ const productsRoutes = require("./products")
 const usersRoutes = require("./users")
 const newsletterMiddleware = require('../middlewares/newsletterMiddleware');
 
+
 /*** Home */
 router.get("/", mainController.index);
 router.post("/", newsletterMiddleware, mainController.index);
