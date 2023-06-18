@@ -36,7 +36,6 @@ const UsersController = {
                         req.session.userLoggedEmail = userToLogin.email;
 
                         req.session.isAdmin = userToLogin.role_id === 1;
-                        console.log(req.session.isAdmin);
 
                         if (req.body.recordame) {
                             res.cookie('userEmail', req.body.email, { maxAge: 60000 * 2 })
@@ -48,8 +47,8 @@ const UsersController = {
                     };
 
                 })
-                .catch(() => {
-                    res.render('users/login', { errors: { msg: 'error en el catch' } });
+                .catch((err) => {
+                    res.render('users/login', { errors: { msg: 'Usuario no encontrado' } });
                 })
 
         } else {
@@ -65,12 +64,11 @@ const UsersController = {
 
         let validationResults = validationResult(req);
         let errors = validationResults.mapped();
-        console.log(errors);
+
+        let image;
+        (req.file) ? image = req.file.filename : image;
 
         if (validationResults.errors.length === 0) {
-
-            let image;
-            (req.file) ? image = (req.file.filename) : image = '';
 
             let password = bcrypt.hashSync(req.body.password, 10);
 
@@ -90,7 +88,7 @@ const UsersController = {
                 .then(() => {
                     return res.redirect('/users/login');
                 })
-                .catch((error)=>{
+                .catch((error) => {
                     console.log(error)
                 })
 
@@ -109,7 +107,10 @@ const UsersController = {
     edit: (req, res) => {
         db.User.findByPk(req.params.id)
             .then(userProfile => {
-                res.render('users/user-edit', { userProfile: userProfile })
+                db.Role.findAll()
+                    .then(roles =>
+                        res.render('users/user-edit', { userProfile: userProfile, roles: roles })
+                    )
             })
             .catch(err => {
                 console.log('Ha ocurrido un error: ' + err);
@@ -123,9 +124,9 @@ const UsersController = {
         db.User.findByPk(req.params.id)
             .then(userToEdit => {
                 let image;
-                req.file == undefined ? image = userToEdit.image : image = req.file.filename;
+                (req.file) ? image = req.file.filename : image = userToEdit.image;
 
-                let password = bcrypt.hashSync(req.body.password, 10);
+
                 let validationResults = validationResult(req);
                 let errors = validationResults.mapped();
 
@@ -141,8 +142,8 @@ const UsersController = {
                         cp: req.body.cp,
                         city: req.body.city,
                         email: req.body.email,
-                        password: password,
-                        role: userToEdit.role
+                        password: userToEdit.password,
+                        role_id: req.body.role
                     },
                         {
                             where: { id: req.params.id }
@@ -154,16 +155,70 @@ const UsersController = {
                             console.log('Ha ocurrido un error: ' + err);
                         })
                 } else {
+                    console.log('Error en el else', errors);
                     res.render('users/user-edit', { userProfile: userToEdit, errors: errors, oldData: req.body });
+                }
+            });
+    },
+
+    password: (req, res) => {
+        db.User.findByPk(req.params.id)
+            .then(userProfile => {
+                res.render('users/user-edit-password', { userProfile: userProfile })
+            })
+            .catch(err => {
+                console.log('Ha ocurrido un error: ' + err);
+            })
+
+
+    },
+
+    passwordUpdate: (req, res) => {
+
+        db.User.findByPk(req.params.id)
+            .then(userToEdit => {
+
+                let validationResults = validationResult(req);
+                let errors = validationResults.mapped();
+
+                let password = bcrypt.hashSync(req.body.password, 10);
+
+                if (validationResults.errors.length === 0) {
+
+                    db.User.update({
+                        first_name: userToEdit.first_name,
+                        last_name: userToEdit.last_name,
+                        birth: userToEdit.birth,
+                        image: userToEdit.image,
+                        phone: userToEdit.phone,
+                        address: userToEdit.address,
+                        cp: userToEdit.cp,
+                        city: userToEdit.city,
+                        email: userToEdit.email,
+                        password: password,
+                        role_id: userToEdit.role
+                    },
+                        {
+                            where: { id: req.params.id }
+                        })
+                        .then(() => {
+                            res.redirect('/users/profile');
+                        })
+                        .catch(err => {
+                            console.log('Ha ocurrido un error: ' + err);
+                        })
+                } else {
+                    console.log('Error en el else', errors);
+                    res.render('users/user-edit-password', { userProfile: userToEdit, errors: errors, oldData: req.body });
                 }
             });
     },
 
     list: (req, res) => {
         db.User.findAll({
-            include : {
+            include: {
                 model: db.Role,
-                as: 'roles' 
+                as: 'roles'
             }
         })
             .then(usersDB => {
