@@ -5,8 +5,8 @@
 -- Server version	8.0.29
 
 
-CREATE SCHEMA IF NOT EXISTS `mwizm4g504p3z8j4` DEFAULT CHARACTER SET utf8 ;
-USE `mwizm4g504p3z8j4` ;
+CREATE SCHEMA IF NOT EXISTS `sql10627129` DEFAULT CHARACTER SET utf8 ;
+USE `sql10627129` ;
 
 --
 -- Table structure for table `roles`

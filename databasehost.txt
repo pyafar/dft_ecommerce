@@ -1,0 +1,16 @@
+To connect to your database use these details;
+
+https://www.freesqldatabase.com/
+
+
+Your account number is: 780692
+
+
+Host: sql10.freesqldatabase.com
+Database name: sql10627129
+Database user: sql10627129
+Database password: MjhiXRRIpl
+Port number: 3306
+
+
+https://www.phpmyadmin.co/
